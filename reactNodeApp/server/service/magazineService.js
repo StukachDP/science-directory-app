@@ -6,7 +6,7 @@ class MagazineService {
 
     async getMagazines() {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM sciencemagizenes`, function(err, result) {
+            pool.query(`SELECT * FROM sciencemagazines`, function(err, result) {
                 return resolve(result);
             });
         });
@@ -16,7 +16,7 @@ class MagazineService {
 
     async getMagazineInfo(magazineId) {
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM sciencemagizenes WHERE id=?", [magazineId], function(err, result) {
+            pool.query("SELECT * FROM sciencemagazines WHERE id=?", [magazineId], function(err, result) {
                 return resolve(result[0]);
             });
         });
@@ -25,7 +25,7 @@ class MagazineService {
 
     async getMagazinesByTitle(searchingData) {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM sciencemagizenes WHERE nameEng LIKE "%"?"%" OR nameOriginal LIKE "%"?"%"`, [searchingData, searchingData], function(err, result) {
+            pool.query(`SELECT * FROM sciencemagazines WHERE nameEng LIKE "%"?"%" OR nameOriginal LIKE "%"?"%"`, [searchingData, searchingData], function(err, result) {
                 if (result !== undefined) {
                     return resolve(result);
                 } else {
@@ -39,7 +39,7 @@ class MagazineService {
 
     async getMagazinesByScientificDirections(choosenDirection) {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM sciencemagizenes WHERE scientificDirections LIKE "%"?"%"`, [choosenDirection], function(err, result) {
+            pool.query(`SELECT * FROM sciencemagazines WHERE scientificDirections LIKE "%"?"%"`, [choosenDirection], function(err, result) {
                 if (result !== undefined) {
                     return resolve(result);
                 } else {
@@ -50,31 +50,23 @@ class MagazineService {
         });
     }
 
-    async createMagazine(nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, description) {
+    async createMagazine(nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience) {
         return new Promise((resolve, reject) => {
-            pool.query("INSERT INTO sciencemagizenes (nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, description]);
+            pool.query("INSERT INTO sciencemagazines (nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience]);
             return resolve("Информация внесена в базу данных...");
         });
     }
 
-    async getMagazineInfoToEdit(magazineId) {
+    async editMagazineInfo(id, nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience) {
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM sciencemagizenes WHERE id=?", [magazineId], function(err, result) {
-                return resolve(result[0]);
-            });
-        });
-    }
-
-    async editMagazineInfo(id, nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, description) {
-        return new Promise((resolve, reject) => {
-            pool.query("UPDATE sciencemagizenes SET nameOriginal=?, nameRus=?, nameEng=?, ISSNprint=?, ISSNonline=?, publisher=?, publisherEng=?, scientificDirections=?, webPage=?, accessTextArticles=?, dataStartArchieve=?, dataEndArchieve=?, embargoTerm=?, prefixDOI=?, includedRSCI=?, linkELibrary=?, accessArticleELibrary=?, dataStartArchieveELibrary=?, dataEndArchieveELibrary=?, bibliometricIndicatorsRSCI=?, yearsIndexingScopus=?, yearsIndexingWebOfScience=?, description=? WHERE id=?", [nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, description, id]);
+            pool.query("UPDATE sciencemagazines SET nameOriginal=?, nameRus=?, nameEng=?, ISSNprint=?, ISSNonline=?, publisher=?, publisherEng=?, scientificDirections=?, webPage=?, accessTextArticles=?, dataStartArchieve=?, dataEndArchieve=?, embargoTerm=?, prefixDOI=?, includedRSCI=?, linkELibrary=?, accessArticleELibrary=?, dataStartArchieveELibrary=?, dataEndArchieveELibrary=?, bibliometricIndicatorsRSCI=?, yearsIndexingScopus=?, yearsIndexingWebOfScience=? WHERE id=?", [nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience, id]);
             return resolve("Информация внесена в базу данных...");
         });
     }
 
     async deleteMagazineInfo(magazineId) {
         return new Promise((resolve, reject) => {
-            pool.query("DELETE FROM sciencemagizenes WHERE id=?", [magazineId]);
+            pool.query("DELETE FROM sciencemagazines WHERE id=?", [magazineId]);
             return resolve("Информация в базе данных обновлена...");
         });
     }

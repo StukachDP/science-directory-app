@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const pool = require("../models/userModel.js");
-const mailService = require("./mailService.js");
 const tokenService = require("./tokenService.js");
 const ApiError = require("../exceptions/api-error.js");
 
@@ -18,17 +17,13 @@ class UserService {
         if (adminCandidate !== undefined) {
             throw ApiError.badRequest("Пользователь уже существует");
         } else {
-            const activationLink = uuid.v4();
-            const isActivated = false;
             const insertResult = await new Promise((resolve, reject) => {
-                pool.query("INSERT INTO admin (adminEmail, password, status, isActivated, activationLink) VALUES (?,?,?,?,?)", [adminEmail, hashPassword, status, isActivated, activationLink]);
+                pool.query("INSERT INTO admin (adminEmail, password, status) VALUES (?,?,?)", [adminEmail, hashPassword, status]);
                 return resolve("Success");
             });
-            //mailService.sendActivationMail(adminEmail, `${process.env.DIRECTORY_URL}/activate/${activationLink}`);
             const payload = {
                 adminEmail,
-                status,
-                activationLink
+                status
             };
             const tokens = tokenService.generateTokens(payload);
             tokenService.saveToken(hashPassword, tokens.refreshToken);
@@ -38,26 +33,6 @@ class UserService {
                 hashPassword
             }
         }
-    }
-
-    async activate(activationLink) {
-
-        const activatedUser = await new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM admin WHERE activationLink=?", [activationLink], function(err, result) {
-                return resolve(result[0]);
-            });
-        });
-        if (activatedUser == undefined) {
-            throw ApiError.badRequest("Некорректная ссылка активации.");
-        } else {
-            const isActivated = true;
-            const activation = await new Promise((resolve, reject) => {
-                pool.query("UPDATE admin SET isActivated=? WHERE adminEmail=?", [isActivated, activatedUser.adminEmail], function(err, result) {
-                    return resolve("Success");
-                });
-            });
-        }
-
     }
 
 
@@ -77,12 +52,10 @@ class UserService {
             }
             const adminEmail = adminCandidate.adminEmail;
             const status = adminCandidate.status;
-            const activationLink = adminCandidate.activationLink;
             const hashPassword = adminCandidate.password;
             const payload = {
                 adminEmail,
-                status,
-                activationLink
+                status
             };
             const tokens = tokenService.generateTokens(payload);
             tokenService.saveToken(hashPassword, tokens.refreshToken);

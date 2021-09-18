@@ -85,11 +85,9 @@ class TokenService {
         } else {
             const adminEmail = userDataCandidate.adminEmail;
             const status = userDataCandidate.status;
-            const activationLink = userDataCandidate.activationLink;
             const payload = {
                 adminEmail,
-                status,
-                activationLink
+                status
             };
             return payload;
         }

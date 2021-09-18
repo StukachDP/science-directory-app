@@ -1,4 +1,3 @@
-const pool = require("../models/userModel.js");
 const userService = require("../service/userService.js");
 const { validationResult } = require("express-validator");
 const ApiError = require("../exceptions/api-error.js");
@@ -44,19 +43,6 @@ class UserController {
             const deletedData = await userService.logout(refreshToken);
             res.clearCookie("refreshToken");
             return res.json(deletedData);
-        } catch (error) {
-            next(error);
-        }
-    }
-
-
-    async activate(req, res, next) {
-
-        try {
-
-            const activationLink = req.params.link;
-            userService.activate(activationLink);
-            return res.redirect(process.env.CLIENT_URL);
         } catch (error) {
             next(error);
         }
