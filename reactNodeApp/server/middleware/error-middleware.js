@@ -1,5 +1,8 @@
 const ApiError = require("../exceptions/api-error.js");
 
+// Промежуточный обработчик ошибок для выявления тех, ошибок, которые вызваны
+// некорректной работой программы.
+
 module.exports = function(err, req, res, next) {
     console.log(err);
     if (err instanceof ApiError) {
