@@ -3,6 +3,9 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import { DirectionsBarContainer, DirectionsBarToggle, DirectionsBarImage, DirectionsBarMenu, DirectionsBarItem} from '../styles/directionsBar-style';
 
+// Компонент описывает создание выпадающего списка из массива с научными направлениями.
+// При нажатии на определенное направление происходит запрос на соответствующую функцию.
+// Стили прописаны в папке styles.
 const DirectionsBar = observer(() => {
     const {magazine} = useContext(Context);
     return (

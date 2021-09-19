@@ -5,6 +5,11 @@ import { DIRECTORY_ROUTE } from "../utils/consts";
 import { Context } from "../index";
 import { observer } from "mobx-react-lite";
 
+// Определена логика роутинга пользователей по страницам.
+// Если пользователь не авторизован на захочет ввести путь, 
+// доступный только администраторам, 
+// то его отправит на основную страницу справочника.
+
 const AppRouter = observer(() => {
     const { user } = useContext(Context);
 

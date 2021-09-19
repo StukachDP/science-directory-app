@@ -3,8 +3,10 @@ import React, {useState} from 'react';
 import CreateMagazine from '../components/modals/createMagazine';
 import { AdminPageContainer, AdminPageButton } from '../styles/adminPage-style';
 
+// Компонент, описывающий страницу администратора.
 
 const Admin = observer(() => {
+    // Состояние, описывающее видимость компонента формы добавления нового журнала.
     const [magazineVisible, setMagazineVisible] = useState(false);
 
     return (

@@ -4,7 +4,10 @@ import { createMagazine } from '../../http/magazineAPI';
 import back from '../../images/back.jpg';
 import { CreateMagazineModalContainer, CreateMagazineModalHeader, CreateMagazineModalTittle, CreateMagazineModalBody, CreateMagazineFormContainer, CreateMagazineCarouselContainer, CreateMagazineCarouselItem,CreateMagazineCarouselImage, CreateMagazineCarouselCaption, CreateMagazineFormField, CreateMagazineFormCheckField, CreateMagazineFormLabel, CreateMagazineModalFooter, CreateMagazineModalButton } from '../../styles/createMagazine-style';
 
-
+// Компонент, описывающий модальное окно, с формой о добавлении информации о журнале.
+// При нажатии на соответствующую кнопку происходит запрос на функцию добавления журнала.
+// Компонент принимает параметры видимости, при нажатии на соответствующие кнопки модальное окно исчезает. 
+// Стили прописаны в папке styles.
 
 const CreateMagazine = observer(({show, onHide}) => {
     
@@ -31,11 +34,18 @@ const CreateMagazine = observer(({show, onHide}) => {
     const [yearsIndexingScopus, setYearsIndexingScopus] = useState("");
     const [yearsIndexingWebOfScience, setYearsIndexingWebOfScience] = useState("");
 
+    // Функция описывающая запрос на добавление журнала.
+    // После добавления в базу данных страница, где находится этот компонент, перезагрузиться.
     const addMagazine = () => {
         createMagazine(nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience)
         .then(window.location.reload(false));
     }
 
+
+    // Вывод модального окна внутри страницы.
+    // Для вывода формы используется тег Carousel из react-bootstrapю
+    // Данный тег, позволяет делать слайдшоу, что использует для разбиения формы на несколько и переход между ними.
+    // ВАЖНО! Слайдшоу невозможно без картинки.
     return (
         <CreateMagazineModalContainer
             size="lg"

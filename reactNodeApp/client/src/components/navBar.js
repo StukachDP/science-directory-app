@@ -8,21 +8,32 @@ import DirectionsBar from './directionsBar';
 import { NavBarMain, NavBarContainer, NavBarBrand, NavBarBrandOnOthersPage, UserDropdownContainer, UserDropdownToggle, UserDropdownImage, UserDropdownMenu, UserDropdownItem} from '../styles/navBar-style';
 
 
-
+// Компонент описывает создание панели навигации.
+// При нажатии на кнопки идет запрос на вызов соответствующих функций.
+// Стили прописаны в папке styles.
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
     const history = useHistory();
     const location = useLocation();
+
+    // Флаг, является ли текущая страница основной.
+    // Необходим для стилевого оформления основной страницы справочника.
     const isDirectory = location.pathname === DIRECTORY_ROUTE;
+    // Состояние ширины экрана, обновляется при изменении ширины.
+    // Необходимо для стилевого оформления страницы.
     const [windows, setWindows] = useState(window.innerWidth);
 
+
+    // Функция, которая посылает запрос на функцию логаут администратора.
+    // Вызывается при нажатии на соответствующую кнопку.
     const logOut = () => {
         logout();
         user.setUser({});
         user.setIsAuth(false);
     }
 
+    // Эффект, в котором происходит обновление состояния ширины экрана при изменении ширины экрана.
     useEffect(() => {
         function handleResize() {
             setWindows(window.innerWidth)

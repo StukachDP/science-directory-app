@@ -6,15 +6,25 @@ import { observer } from "mobx-react-lite";
 import { Context } from "../index";
 import { AuthPageContainer, AuthPageLogRegCard, AuthPageCardCaption, AuthPageFormContainer, AuthPageFormItem, AuthPageFormButton } from "../styles/authPage-style";
 
+
+// Страница авторизации на администратора, а также регистрации нового администратора.
+// В зависимости от того админ это или обычный пользователь происходит вызов соответствующей функции, 
+// а также появляется соответствующая форма.
 const Auth = observer(() => {
     const { user } = useContext(Context);
     const location = useLocation();
     const history = useHistory();
+
+    // Флаг, залогинен ли пользователь.
     const isLogin = location.pathname === LOGIN_ROUTE;
+
+    // Описание получаемых в форме данных.
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("Админ");
 
+    // Функция, запускаемая при нажатии на кнопку, 
+    // в которой идет запрос на функцию авторизации или регистрации администратора.
     const click = async () => {
         try {
             let data;
@@ -31,6 +41,8 @@ const Auth = observer(() => {
         }
     };
 
+    // Вывод формы авторизации/регистрации и ее стилей.
+    // Стили находяться в папке styles.
     return (
         <AuthPageContainer>
             <AuthPageLogRegCard>

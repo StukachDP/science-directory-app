@@ -6,21 +6,31 @@ import EditMagazine from '../components/modals/editMagazine';
 import {getMagazineInfo} from "../http/magazineAPI";
 import { MagazinePageContainer, DivContainer, MainTittleContainer, NotMainTittle, ButtonsContainer, ButtonItem } from '../styles/magazinePage-style';
 
-
+// Страница со всей информацией о конкретном журнале.
 const MagazinePage = () => {
     const [magazine, setMagazine] = useState({});
     const {user} = useContext(Context);
     const [scientificDirections, setScientificDirections] = useState([]);
+
+    // Состояние всплывающих окон на редактирование или удаление информации по журналу.
+    // При нажатии на кнопку состояние меняется и модальное окна появляется.
     const [editMagazineForm, setEditMagazineForm] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
+
+    // Переменная id, которая берется из строки запроса.
     const {id} = useParams();
     
+
+    // Эффект, вызвающий функцию получения данных по журналу с выбранным id.
+    // Обновление поля в объекте состояния.
     useEffect(() => {
         getMagazineInfo(id).then(data => {
             setMagazine(data.data)
             setScientificDirections(data.data.scientificDirections.split(" "))
     })}, []);
 
+    // Вывод полученной после эффекта информации внутри HTML-тегов
+    // Стили прописаны в соответствующем файле в папке styles
     return (
         <MagazinePageContainer>
                 <DivContainer>
@@ -109,7 +119,7 @@ const MagazinePage = () => {
                     </div>
                 </DivContainer>
 
-            
+                {/* Если пользователь авторизован, то появляются кнопки на удаление/редактирование журнала */}
                 {user.isAuth?
                     <ButtonsContainer>
                         <ButtonItem 

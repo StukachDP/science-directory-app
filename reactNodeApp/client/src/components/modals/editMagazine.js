@@ -5,7 +5,13 @@ import back from '../../images/back.jpg';
 import { EditMagazineModalContainer, EditMagazineModalHeader, EditMagazineModalTittle, EditMagazineModalBody, EditMagazineFormContainer, EditMagazineCarouselContainer, EditMagazineCarouselItem,EditMagazineCarouselImage, EditMagazineCarouselCaption, EditMagazineFormField, EditMagazineFormCheckField, EditMagazineFormLabel, EditMagazineModalFooter, EditMagazineModalButton, EditMagazineImage } from '../../styles/editMagazine-style';
 
 
-
+// Компонент, описывающий модальное окно, с формой на редактирование информации о журнале.
+// При нажатии на соответствующую кнопку происходит запрос на функцию редактирования журнала.
+// Компонент принимает параметры видимости, 
+// при нажатии на соответствующие кнопки модальное окно исчезает.
+// Также компонент принимает текущую информацию о журнале, 
+// которая появляется в полях формы, после нажатия на кнопку. 
+// Стили прописаны в папке styles.
 
 const EditMagazine = observer(({show, onHide,data}) => {
 
@@ -32,6 +38,8 @@ const EditMagazine = observer(({show, onHide,data}) => {
     const [yearsIndexingScopus, setYearsIndexingScopus] = useState("");
     const [yearsIndexingWebOfScience, setYearsIndexingWebOfScience] = useState("");
 
+    // Функция описывающая запрос на редактирование журнала.
+    // После редактирования в базе данных страница, где находится этот компонент, перезагрузиться.
     const editMagazine = () => {
         
         editMagazineInfo(data.id, nameOriginal, nameRus, nameEng, ISSNprint, ISSNonline, publisher, publisherEng, scientificDirections, webPage, accessTextArticles, dataStartArchieve, dataEndArchieve, embargoTerm, prefixDOI, includedRSCI, linkELibrary, accessArticleELibrary, dataStartArchieveELibrary, dataEndArchieveELibrary, bibliometricIndicatorsRSCI, yearsIndexingScopus, yearsIndexingWebOfScience)
@@ -63,7 +71,10 @@ const EditMagazine = observer(({show, onHide,data}) => {
         setYearsIndexingWebOfScience(data.yearsIndexingWebOfScience);
     }
 
-    
+    // Вывод модального окна внутри страницы.
+    // Для вывода формы используется тег Carousel из react-bootstrapю
+    // Данный тег, позволяет делать слайдшоу, что использует для разбиения формы на несколько и переход между ними.
+    // ВАЖНО! Слайдшоу невозможно без картинки.
     return (
         <EditMagazineModalContainer
             size="lg"

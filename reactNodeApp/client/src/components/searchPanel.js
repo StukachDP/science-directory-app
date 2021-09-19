@@ -3,6 +3,10 @@ import {observer} from "mobx-react-lite";
 import { Context } from '..';
 import { SearchField, SearchPanelContainer, SearchPanelButton } from '../styles/searchPanel-style';
 
+
+// Компонент, в котором описано создание поля ввода информации для поиска журналов по названию
+// При нажатии на соответствующую кнопку идет запрос на функцию поиска.
+// Стили прописаны в папке styles
 const SearchPanel = observer(() => {
     const {magazine} = useContext(Context);
     const [searchingData, setSearchingInfo] = useState('');

@@ -6,11 +6,17 @@ import { DIRECTORY_ROUTE } from '../../utils/consts';
 import { DeleteMagazineModalContainer, DeleteMagazineContainer, DeleteMagazineCaption, DeleteMagazineParagraph, DeleteMagazineButton } from '../../styles/deleteMagazine-style';
 
 
-
-
+// Компонент, описывающий модальное окно, с подтверждающим сообщением на удаление информации о журнале.
+// При нажатии на соответствующую кнопку происходит запрос на функцию удаления журнала.
+// Компонент принимает параметры видимости и информацию о журнале, который нужно будет удалить. 
+// Стили прописаны в папке styles.
 const DeleteMagazine = observer(({show, onHide,data}) => {
 
+    // Функция, необходимая для осуществения перехода между страницами.
     const history = useHistory();
+
+    // Функция, внутри которой происходит запрос на удаление информации о журнале.
+    // После удаления происходит переход на основную страницу справочника.
     const deleteMagazine = () => {
         
         deleteMagazineInfo(data.id)
